@@ -9,8 +9,8 @@ on:
         default: 'false'
         type: choice
         options:
-          - true
-          - false
+          - 'true'
+          - 'false'
   schedule:
     - cron: '0 16 * * 0'
 
@@ -53,6 +53,15 @@ jobs:
       run: |
         git clone $REPO_URL -b $REPO_REF --single-branch --depth=1 openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        cd $GITHUB_WORKSPACE/openwrt
+        echo "OPENWRT_PATH=$PWD" >> $GITHUB_ENV
+
+    - name: Cache Toolchain
+      uses: HiGarfield/cachewrtbuild@main
+      with:
+        ccache: false
+        mixkey: ${{ env.REPO_URL }}-${{ env.REPO_REF }}-arm64-N1
+        prefix: ${{ env.OPENWRT_PATH }}
 
     - name: 更新并安装feeds
       working-directory: ./openwrt
@@ -100,7 +109,7 @@ jobs:
         PACKAGE_SOC: diy
         GZIP_IMGS: .xz
         SCRIPT_DIY_PATH: mk_s905d_n1.sh
-        WHOAMI: Winnie-0721
+        WHOAMI: david
         SW_FLOWOFFLOAD: 0
         SFE_FLOW: 0
         
