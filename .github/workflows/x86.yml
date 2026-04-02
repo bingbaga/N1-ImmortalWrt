@@ -60,7 +60,7 @@ jobs:
       uses: HiGarfield/cachewrtbuild@main
       with:
         ccache: false
-        mixkey: ${{ env.REPO_URL }}-${{ env.REPO_REF }}-arm64-N1
+        mixkey: ${{ env.REPO_URL }}-${{ env.REPO_REF }}-x86
         prefix: ${{ env.OPENWRT_PATH }}
 
     - name: 更新并安装feeds
