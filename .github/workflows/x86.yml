@@ -93,18 +93,31 @@ jobs:
         find dl -size -1k -exec rm -f {} \;
 
     - name: 编译N1固件
+      id: compile
       run: |
         chmod -R 755 openwrt
         cd openwrt
+        echo "DATE=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
+        echo "FILE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
         echo -e "可使用的核心数：$(nproc)"
+        echo "status=success" >> $GITHUB_OUTPUT
         make -j$(nproc) || make -j$(($(nproc) / 2)) || make -j1 V=s
 
+    - name: Organize Files
+      if: steps.compile.outputs.status == 'success'
+      run: |
+        cd $OPENWRT_PATH/bin/targets/*/*
+        cat config.buildinfo
+        echo "KERNEL=$(cat *.manifest | grep ^kernel | cut -d- -f2 | tr -d ' ')" >> $GITHUB_ENV
+        rm -rf packages *.buildinfo *.manifest *kernel.bin *rootfs.img.gz profiles.json sha256sums
+        rename 's/^/mini-/' *
+        echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
         
     - name: 发布固件
       uses: softprops/action-gh-release@master
       with:
-        tag_name: ImmortalWrt_${{ env.PACKAGED_OUTPUTDATE }}
-        files: ${{ env.PACKAGED_OUTPUTPATH }}/*.gz
+        tag_name: ImmortalWrt_${{ env.FILE_DATE }}
+        files: ${{ env.FIRMWARE_PATH }}/*
         body: |
           首次使用建议全新刷写
           * 基本信息
