@@ -66,8 +66,8 @@ CONFIG_PACKAGE_luci-app-samba4=y
 #CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Rust_Server=y
 #CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y
 CONFIG_PACKAGE_luci-app-ttyd=y
-CONFIG_PACKAGE_luci-app-turboacc=y
-CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_OFFLOADING=y
+#CONFIG_PACKAGE_luci-app-turboacc=y
+#CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_OFFLOADING=y
 # CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_DNSFORWARDER is not set
 # CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_DNSPROXY is not set
 #CONFIG_PACKAGE_luci-app-unblockmusic=y
@@ -100,8 +100,8 @@ CONFIG_PACKAGE_snmpd=y
 CONFIG_PACKAGE_zsh=y
 
 # Shortcut-Fe
-CONFIG_PACKAGE_kmod-shortcut-fe=y
-CONFIG_PACKAGE_kmod-shortcut-fe-cm=y
+#CONFIG_PACKAGE_kmod-shortcut-fe=y
+#CONFIG_PACKAGE_kmod-shortcut-fe-cm=y
 
 CONFIG_PACKAGE_luci-app-softethervpn=y
 CONFIG_PACKAGE_softethervpn5-bridge=y
